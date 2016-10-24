@@ -1,3 +1,4 @@
+"use strict";
 const User = require('../DB/Models/User');
 class UserController {
     userSignup(user_data, cb) {

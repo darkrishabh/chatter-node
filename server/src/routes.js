@@ -9,9 +9,9 @@ router.use(function (req, res, next) {
 });
 
 
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
+// test route to make sure everything is working (accessed at GET http://localhost:8080/)
 router.get('/', function (req, res) {
-    res.json({message: 'hooray! welcome to our api!'});
+    res.sendFile(__dirname + '/web/dist/index.html')
 });
 
 // Test route for user post and get methods

@@ -1,3 +1,4 @@
+"use strict";
 /**
  * This server just provides REST APIs to run the chat application
  * No one gives a fuck about server but I kind of do. So here is what I plan to
@@ -6,6 +7,8 @@
  * 2. Write the login/signup api
  * 3. Based on the login user I am gonna generate a session which will be stored in some DB(redis most probably.)
  */
+
+    require("babel-register");
 var express = require('express'),
     path = require('path'),
     router = require('./routes'),
@@ -19,7 +22,21 @@ var express = require('express'),
 global.Utils = require("./utils");
 
 // Setting up the express app.
-let app = express();
+var app = express();
+
+// using webpack-dev-server and middleware in development environment
+if(process.env.NODE_ENV !== 'production') {
+    var webpackDevMiddleware = require('webpack-dev-middleware');
+    var webpackHotMiddleware = require('webpack-hot-middleware');
+    var webpack = require('webpack');
+    var config = require('../webpack.config');
+    var compiler = webpack(config);
+
+    app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }));
+    app.use(webpackHotMiddleware(compiler));
+}
+
+app.use(express.static(path.join(__dirname, 'web/dist')));
 
 //configure app to parse cookies and populate request cookies
 app.use(cookieParser());
