@@ -17,13 +17,16 @@ router.get('/', function (req, res) {
 // Test route for user post and get methods
 router
     .route("/user")
-    .post((req, res)=> {
-        if(req.body && req.body.username){
-            res.json(UserController.userSignup(req.body));
-        } else {
-            res.json({
-                message: "Failed"
+    .post(function (req, res) {
+        if (req.body) {
+            UserController.userSignup(req.body, function (err, response) {
+                if (!err) {
+                    req.session.user_id = req.body.username;
+                }
+                res.json(response)
             })
+        } else {
+            res.json(Utils.makeResponse(false, "No data Passed"))
         }
     });
 

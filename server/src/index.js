@@ -11,13 +11,22 @@ var express = require('express'),
     router = require('./routes'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
+    db = require('./DB/database'),
+    session = require('express-session'),
     bodyParser = require('body-parser');
 
+//Defining Utils as a global var
+global.Utils = require("./utils");
+
 // Setting up the express app.
-const app = express();
+let app = express();
 
 //configure app to parse cookies and populate request cookies
 app.use(cookieParser());
+// To Set Sessions
+app.use(session({secret: 'ssshhhhh'}));
+// Logger added
+app.use(logger('combined'));
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -31,7 +40,9 @@ var port = process.env.PORT || 8080;        // set our port
 app.use('/', router);
 
 
-// START THE SERVER
+// START THE SERVER AFTER DB CONNECTION
 // =============================================================================
-app.listen(port);
-console.log('Magic happens on port ' + port);
+db(function(){
+    app.listen(port);
+    console.log('Magic happens on port ' + port);
+})
