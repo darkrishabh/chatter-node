@@ -4,14 +4,16 @@
   "description": "Node Server for the chat application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node src/index.js --presets es2015,stage-2",
+    "build": "babel src -d build",
+    "serve": "node build/index.js"
   },
   "keywords": [
     "chatter"
   ],
   "author": "Rishabh Mehan",
   "license": "ISC",
-
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -19,5 +21,10 @@
     "mongoose": "^4.6.4",
     "morgan": "^1.7.0",
     "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-stage-2": "^6.17.0"
   }
 }
