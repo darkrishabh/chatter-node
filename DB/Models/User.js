@@ -1,5 +1,8 @@
+/**
+ * Created by hangvirus on 23/10/16.
+ */
 var bcrypt = require('bcrypt');
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -19,5 +22,4 @@ UserSchema.methods = {
         this.password = bcrypt.hashSync(password, 10);
     }
 };
-
-module.exports = UserSchema;
+module.exports = mongoose.model("User", UserSchema);

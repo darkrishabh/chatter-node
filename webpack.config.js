@@ -6,7 +6,7 @@ var path = require('path');
 module.exports = {
     devtool: "source-map",
     entry: [
-        './src/web/index'
+        './client/index'
     ],
     module: {
         loaders: [
@@ -15,12 +15,12 @@ module.exports = {
         ]
     },
     output: {
-        path: path.join(__dirname, './src/web/dist'),
+        path: path.join(__dirname, './public'),
         publicPath: '/',
-        filename: '[name].js'
+        filename: 'app.js'
     },
     devServer: {
-        contentBase: './src/web/dist',
+        contentBase: './public',
         hot: true
     },
     plugins: [

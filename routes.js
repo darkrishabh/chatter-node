@@ -11,23 +11,21 @@ router.use(function (req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/)
 router.get('/', function (req, res) {
-    res.sendFile(__dirname + '/web/dist/index.html')
+    res.sendFile(__dirname + '/public/index.html')
 });
 
 // Test route for user post and get methods
-router
-    .route("/user")
-    .post(function (req, res) {
-        if (req.body) {
-            UserController.userSignup(req.body, function (err, response) {
-                if (!err) {
-                    req.session.user_id = req.body.username;
-                }
-                res.json(response)
-            })
-        } else {
-            res.json(Utils.makeResponse(false, "No data Passed"))
-        }
-    });
+router.route("/user").post(function (req, res) {
+    if (req.body) {
+        UserController.userSignup(req.body, function (err, response) {
+            if (!err) {
+                req.session.user_id = req.body.username;
+            }
+            res.json(response)
+        })
+    } else {
+        res.json(Utils.makeResponse(false, "No data Passed"))
+    }
+});
 
 module.exports = router;
